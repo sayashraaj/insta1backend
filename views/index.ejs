@@ -1,0 +1,8 @@
+<html>
+<body>
+<% for(var i=0;i<pics.length;i++){ %>
+<% pics[i].user.edge_owner_to_timeline_media.edges.forEach(function (edge) { %>
+<img src="<%= edge.node.display_url %>"><br>
+<% })} %>
+</body>
+</html>
