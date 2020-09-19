@@ -31,7 +31,6 @@ const client = new Instagram({ username, password })
 const pages = ['enthuisallyouneed', 'insti_comics']
 
 app.get('/', async (req,res)=>{
-	// res.render('index')
 	var pics = new Array(pages.length);
 	for(var i=0;i<pages.length;i++){
 	pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
@@ -42,7 +41,6 @@ app.get('/', async (req,res)=>{
 		https://www.instagram.com/p/{media-shortcode}/
 		console.log(edge.node.taken_at_timestamp)
 	})
-	// console.log(pics[0]);
 	res.render('index', {
 	pics: pics
 	} )
