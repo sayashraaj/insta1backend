@@ -33,6 +33,7 @@ app.get('/', async (req,res)=>{
 
 	pics[0].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
 		console.log(edge.node.shortcode)
+		// https://www.instagram.com/p/{media-shortcode}/
 		console.log(edge.node.taken_at_timestamp)
 	})
 	// console.log(pics[0]);
