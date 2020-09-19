@@ -33,7 +33,7 @@ app.get('/', async (req,res)=>{
 
 	pics[0].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
 		console.log(edge.node.shortcode)
-		// https://www.instagram.com/p/{media-shortcode}/
+		https://www.instagram.com/p/{media-shortcode}/
 		console.log(edge.node.taken_at_timestamp)
 	})
 	// console.log(pics[0]);
@@ -41,20 +41,5 @@ app.get('/', async (req,res)=>{
 	pics: pics
 	} )
 })
-
-// app.post('/', (req,res)=>{
-
-// 	let hrstart = process.hrtime()
-// 	let result = compare(req.body.string1.toString(), req.body.string2.toString())
-// 	let hrend = process.hrtime(hrstart)
-// 	let exectime = `${hrend[0]} seconds, ${hrend[1] / 1000000} ms`
-
-// 	res.render('result', {
-// 	result: result.toString(),
-// 	exectime: exectime,
-// 	length1: req.body.string1.length,
-// 	length2: req.body.string2.length
-// 	} )
-// })
 
 app.listen(PORT)
