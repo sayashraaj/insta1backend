@@ -31,19 +31,22 @@ const client = new Instagram({ username, password })
 const pages = ['enthuisallyouneed', 'insti_comics']
 
 app.get('/', async (req,res)=>{
-	var pics = new Array(pages.length);
-	for(var i=0;i<pages.length;i++){
-	pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
+	try {
+		var pics = new Array(pages.length);
+		for(var i=0;i<pages.length;i++){
+		pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
+		}
+	
+		pics[0].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
+			console.log(edge.node.shortcode)
+			// https://www.instagram.com/p/{media-shortcode}/
+			console.log(edge.node.taken_at_timestamp)
+		})
+		res.render('index',{pics:pics})
 	}
-
-	pics[0].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
-		console.log(edge.node.shortcode)
-		// https://www.instagram.com/p/{media-shortcode}/
-		console.log(edge.node.taken_at_timestamp)
-	})
-	res.render('index', {
-	pics: pics
-	} )
+	catch(e){
+		res.status(500).send({ error: "boo:(" });
+	}
 })
 
 app.listen(PORT)
