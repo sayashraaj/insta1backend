@@ -1,3 +1,4 @@
+//	IMPORT
 const express = require('express')
 const app = express()
 const ejs = require('ejs')
@@ -8,6 +9,9 @@ app.use(express.urlencoded({ extended: false }))
 app.set('view engine', 'ejs');
 // app.use(express.static(__dirname + '/public'));
 
+//	END OF IMPORT
+
+//INSTAAPI INITIALIZE
 const Instagram = require('instagram-web-api')
 // const { username, password } = process.env
 const username = "anakin123sand"
@@ -21,7 +25,9 @@ const client = new Instagram({ username, password })
 
   // console.log(profile)
 })()
+//END OF INSTAAPI INITIALIZE
 
+//LIST OF PAGES
 const pages = ['enthuisallyouneed', 'insti_comics']
 
 app.get('/', async (req,res)=>{
