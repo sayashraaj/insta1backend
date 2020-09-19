@@ -27,7 +27,7 @@ const client = new Instagram({ username, password })
 })()
 //END OF INSTAAPI INITIALIZE
 
-//LIST OF PAGES
+//LIST OF PAGES TO SCAN
 const pages = ['enthuisallyouneed', 'insti_comics']
 
 app.get('/', async (req,res)=>{
