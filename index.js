@@ -11,6 +11,14 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.urlencoded({ extended: false }))
 app.set('view engine', 'ejs');
+
+//CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // app.use(express.static(__dirname + '/public'));
 
 //	END OF IMPORT
@@ -75,9 +83,9 @@ app.get('/', async (req,res)=>{
 		// console.log(embedcode)
 
 		}
-		res.render('index',{embedcode:embedcode})
+		// res.render('index',{embedcode:embedcode})
 		// res.send({shortcode:shortcode, timestamp:timestamp})
-		// res.send({embedcode:embedcode})
+		res.send({embedcode:embedcode})
 	}
 	catch(e){
 		console.log(e)
