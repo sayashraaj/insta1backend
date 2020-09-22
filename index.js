@@ -91,7 +91,7 @@ app.get('/', async (req,res)=>{
 	catch(e){
 		// console.log(e)
 		// res.status(500).send({ error: "boo:(" });
-		res.status(500).send({ error: appid });
+		res.status(500).send({ appid:appid });
 	}
 })
 
