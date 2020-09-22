@@ -86,7 +86,7 @@ app.get('/', async (req,res)=>{
 		}
 		// res.render('index',{embedcode:embedcode})
 		// res.send({shortcode:shortcode, timestamp:timestamp})
-		res.json({embedcode:embedcode})
+		res.json({embedcode:embedcode, timestamp:timestamp})
 	}
 	catch(e){
 		// console.log(e)
