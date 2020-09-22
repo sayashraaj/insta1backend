@@ -76,7 +76,8 @@ app.get('/', async (req,res)=>{
 			embedcode.push(jason.html)
 		}
 		catch(e){
-			console.log(e)
+			// console.log(e)
+			res.status(500).send({ error: "boohoo :(" });
 		}
 		}
 
@@ -88,8 +89,9 @@ app.get('/', async (req,res)=>{
 		res.json({embedcode:embedcode})
 	}
 	catch(e){
-		console.log(e)
-		res.status(500).send({ error: "boo:(" });
+		// console.log(e)
+		// res.status(500).send({ error: "boo:(" });
+		res.status(500).send({ error: e });
 	}
 })
 
