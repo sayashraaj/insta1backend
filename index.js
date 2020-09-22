@@ -37,7 +37,7 @@ const client = new Instagram({ username, password })
   await client.login()
   const profile = await client.getProfile()
 
-  console.log(profile)
+  // console.log(profile)
 })()
 //END OF INSTAAPI INITIALIZE
 
@@ -85,7 +85,7 @@ app.get('/', async (req,res)=>{
 		}
 		// res.render('index',{embedcode:embedcode})
 		// res.send({shortcode:shortcode, timestamp:timestamp})
-		res.send({embedcode:embedcode})
+		res.json({embedcode:embedcode})
 	}
 	catch(e){
 		console.log(e)
