@@ -2,6 +2,10 @@
 const express = require('express')
 const app = express()
 const ejs = require('ejs')
+const fetch = require('node-fetch');
+//read PROCESS.ENV var
+const dotenv = require('dotenv');
+dotenv.config();
 
 const PORT = process.env.PORT || 3000
 
@@ -13,9 +17,11 @@ app.set('view engine', 'ejs');
 
 //INSTAAPI INITIALIZE
 const Instagram = require('instagram-web-api')
-// const { username, password } = process.env
-const username = "anakin123sand"
-const password = "anakinsand123"
+
+const username = process.env.USERNAME
+const password = process.env.PASSWORD
+const appid = process.env.APPID
+const appsecret = process.env.APPSECRET
 
 const client = new Instagram({ username, password })
 
@@ -23,7 +29,7 @@ const client = new Instagram({ username, password })
   await client.login()
   const profile = await client.getProfile()
 
-  // console.log(profile)
+  console.log(profile)
 })()
 //END OF INSTAAPI INITIALIZE
 
@@ -35,6 +41,7 @@ app.get('/', async (req,res)=>{
 		var pics = new Array(pages.length);
 		var shortcode = [];
 		var timestamp = [];
+		var embedcode = [];
 
 		for(var i=0;i<pages.length;i++){
 		pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
@@ -47,9 +54,30 @@ app.get('/', async (req,res)=>{
 			timestamp.push(edge.node.taken_at_timestamp)
 		})
 
+		for(var i=0;i<shortcode.length;i++)
+		{
+		var posturl = "https://www.instagram.com/p/"+shortcode[i]+"/"
+		var urll = "https://graph.facebook.com/instagram_oembed?url="+posturl+"&access_token="+appid+"|"+appsecret;
+		// fetch(urll).then(res => res.json()).then(json => embedcode.push(json.html))
+		// fetch(urll).then(res => {console.log(res); res.json()}).then(json => {embedcode.push(json)})
+
+		try{
+			var fetchy = await fetch(urll);
+			var jason = await fetchy.json();
+			// console.log(jason.html)
+			embedcode.push(jason.html)
 		}
-		// res.render('index',{pics:pics})
-		res.send({shortcode:shortcode, timestamp:timestamp})
+		catch(e){
+			console.log(e)
+		}
+		}
+
+		// console.log(embedcode)
+
+		}
+		res.render('index',{embedcode:embedcode})
+		// res.send({shortcode:shortcode, timestamp:timestamp})
+		// res.send({embedcode:embedcode})
 	}
 	catch(e){
 		console.log(e)
