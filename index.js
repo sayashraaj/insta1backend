@@ -42,18 +42,18 @@ const client = new Instagram({ username, password })
 //END OF INSTAAPI INITIALIZE
 
 //LIST OF PAGES TO SCAN
-const pages = ['enthuisallyouneed', 'insti_comics']
+const pages = ['enthuisallyouneed', 'insti_comics', 'insti_memers']
 
 app.get('/', async (req,res)=>{
 	try {
-		var pics = new Array(pages.length);
+		var pics = [];
 		var shortcode = [];
 		var timestamp = [];
 		var embedcode = [];
 
 		for(var i=0;i<pages.length;i++){
 		pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
-
+console.log(pages[i]);
 		pics[i].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
 			console.log(edge.node.shortcode)
 			shortcode.push(edge.node.shortcode)
@@ -61,6 +61,7 @@ app.get('/', async (req,res)=>{
 			console.log(edge.node.taken_at_timestamp)
 			timestamp.push(edge.node.taken_at_timestamp)
 		})
+	}
 
 		for(var i=0;i<shortcode.length;i++)
 		{
@@ -81,9 +82,8 @@ app.get('/', async (req,res)=>{
 		}
 		}
 
-		// console.log(embedcode)
+		// console.log(embedcode.length)
 
-		}
 		// res.render('index',{embedcode:embedcode})
 		// res.send({shortcode:shortcode, timestamp:timestamp})
 		res.json({embedcode:embedcode, timestamp:timestamp})
