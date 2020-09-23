@@ -53,12 +53,12 @@ app.get('/', async (req,res)=>{
 
 		for(var i=0;i<pages.length;i++){
 		pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
-console.log(pages[i]);
+
 		pics[i].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
-			console.log(edge.node.shortcode)
+			// console.log(edge.node.shortcode)
 			shortcode.push(edge.node.shortcode)
 			// https://www.instagram.com/p/{media-shortcode}/
-			console.log(edge.node.taken_at_timestamp)
+			// console.log(edge.node.taken_at_timestamp)
 			timestamp.push(edge.node.taken_at_timestamp)
 		})
 	}
