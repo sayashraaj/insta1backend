@@ -22,6 +22,14 @@ app.use(function(req, res, next) {
 // app.use(express.static(__dirname + '/public'));
 
 //	END OF IMPORT
+//GLOBAL VARS
+var pics = [];
+var shortcode = [];
+var timestamp = [];
+var embedcode = [];
+var latesthour= new Date();
+//END OF GLOBAL VARS
+
 
 //INSTAAPI INITIALIZE
 const Instagram = require('instagram-web-api')
@@ -45,14 +53,23 @@ const client = new Instagram({ username, password })
 const pages = ['enthuisallyouneed', 'insti_comics', 'insti_memers']
 
 app.get('/', async (req,res)=>{
+
+	//minimise calls for hourDiff<1 && minutesDiff<10
+	var date = new Date();
+	if((date.getHours()-latesthour.getHours()<1) && (date.getMinutes()-latesthour.getMinutes()<10) && embedcode.length!=0 && timestamp.length!=0){
+		res.json({embedcode:embedcode, timestamp:timestamp})
+	}
+
+	else{
 	try {
-		var pics = [];
-		var shortcode = [];
-		var timestamp = [];
-		var embedcode = [];
+
+		pics = [];
+		shortcode = [];
+		timestamp = [];
+		embedcode = [];
 
 		for(var i=0;i<pages.length;i++){
-		pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5 })
+		pics[i] = await client.getPhotosByUsername({ username: pages[i].toString(), first: 5})
 
 		pics[i].user.edge_owner_to_timeline_media.edges.forEach((edge)=>{
 			// console.log(edge.node.shortcode)
@@ -92,6 +109,8 @@ app.get('/', async (req,res)=>{
 		// console.log(e)
 		res.status(500).send({ error: "boo:(" });
 	}
+
+	} //else end
 })
 
 app.listen(PORT)
