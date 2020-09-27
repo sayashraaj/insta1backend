@@ -63,6 +63,10 @@ app.get('/', async (req,res)=>{
 	else{
 	try {
 
+		//updating last page call time
+		latesthour= new Date();
+		//
+		
 		pics = [];
 		shortcode = [];
 		timestamp = [];
