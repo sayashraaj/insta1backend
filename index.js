@@ -105,8 +105,9 @@ app.get('/', async (req,res)=>{
 
 		// console.log(embedcode.length)
 
+		//return ejs
 		res.render('index',{embedcode:embedcode})
-		// res.send({shortcode:shortcode, timestamp:timestamp})
+		//return json
 		// res.json({embedcode:embedcode, timestamp:timestamp})
 	}
 	catch(e){
